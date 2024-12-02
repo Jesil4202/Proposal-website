@@ -47,12 +47,16 @@ button {
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+button:hover {
+    transform: scale(1.1);
 }
 
 button#yesButton {
     background-color: #ff5e57;
     color: #fff;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 button#yesButton:hover {
@@ -62,7 +66,6 @@ button#yesButton:hover {
 button#noButton {
     background-color: #f5f5f5;
     color: #ff5e57;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     position: absolute;
 }
 
@@ -100,6 +103,17 @@ button#noButton:hover {
     }
     100% {
         opacity: 0;
-        display: none;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        font-size: 1.2rem;
+        padding: 8px 16px;
     }
 }

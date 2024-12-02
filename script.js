@@ -14,14 +14,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Handle fireworks display when "Yes" is clicked
 function showFireworks() {
-    container.classList.add("hidden");
     fireworksDiv.classList.remove("hidden");
 
     const canvas = document.getElementById("fireworksCanvas");
     const ctx = canvas.getContext("2d");
 
+    // Set canvas dimensions
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    // Adjust canvas size on window resize
+    window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
 
     const particles = [];
 
@@ -32,7 +38,7 @@ function showFireworks() {
                 x: x,
                 y: y,
                 radius: Math.random() * 4,
-                color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                color: Math.random() * 360, // Use HSL color
                 speedX: (Math.random() - 0.5) * 10,
                 speedY: (Math.random() - 0.5) * 10,
                 alpha: 1,
@@ -52,7 +58,7 @@ function showFireworks() {
             } else {
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2, false);
-                ctx.fillStyle = `rgba(${particle.color}, ${particle.alpha})`;
+                ctx.fillStyle = `hsla(${particle.color}, 100%, 50%, ${particle.alpha})`;
                 ctx.fill();
             }
         });
@@ -62,15 +68,20 @@ function showFireworks() {
         }
     }
 
+    // Create particles at the center of the canvas
     createParticle(canvas.width / 2, canvas.height / 2);
     drawParticles();
 }
 
 // Move the "No" button when hovered
 function moveNoButton() {
-    const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
-    const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
+    const randomX = Math.min(Math.random() * (window.innerWidth - noButton.offsetWidth), window.innerWidth - noButton.offsetWidth);
+    const randomY = Math.min(Math.random() * (window.innerHeight - noButton.offsetHeight), window.innerHeight - noButton.offsetHeight);
 
     noButton.style.left = `${randomX}px`;
     noButton.style.top = `${randomY}px`;
 }
+
+// Event listeners for buttons
+yesButton.addEventListener("click", showFireworks);
+noButton.addEventListener("mouseover", moveNoButton);
